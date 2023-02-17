@@ -1,10 +1,9 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-var base64js = require('base64-js');
 const Buffer = require('buffer').Buffer;
-const RNSimpleCrypto = require('@react-native-cryptocurrencies/react-native-simple-crypto').default;
 const randomBytes = require('react-native-securerandom').generateSecureRandom;
 const _wordlists_1 = require('./_wordlists');
+import { sha256Bytes } from 'react-native-sha256';
 
 let DEFAULT_WORDLIST = _wordlists_1._default;
 const INVALID_MNEMONIC = 'Invalid mnemonic';
@@ -56,13 +55,8 @@ async function deriveChecksumBits(entropyBuffer) {
   */
 
   const entropyBuffer_u8 = Uint8Array.from(entropyBuffer);
-  const entropyBuffer_u8_b64 = base64js.fromByteArray(entropyBuffer_u8);
-
   /* RNSimpleCrypto doesnt seem to be properly handling ArrayBuffers & Uint8Arrays */
-  const hash = Buffer.from(
-    await RNSimpleCrypto.SHA_b64.sha256(entropyBuffer_u8_b64),
-    'base64',
-  ).toString('hex');
+  const hash = await sha256Bytes(Array.from(entropyBuffer_u8))
 
   const normalizedHash =
     typeof hash === 'string' ? Buffer.from(hash, 'hex') : hash;
