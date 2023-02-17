@@ -42,8 +42,7 @@
     "create-hash": "^1.1.0",
     "pbkdf2": "^3.0.9",
     "randombytes": "^2.0.1",
-    "react-native-securerandom": "^1.0.0",
-    "@react-native-cryptocurrencies/react-native-simple-crypto": "^0.3.1"
+    "react-native-securerandom": "^1.0.0"
   },
   "devDependencies": {
     "node-fetch": "^1.6.3",
